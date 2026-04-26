@@ -1,5 +1,5 @@
 {
   "routes": [
-    { "src": "/LinearRegression", "dest": "/LinearRegression.html" }
+    { "src": "/", "dest": "/index.html" }
   ]
 }
