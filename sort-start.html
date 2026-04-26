@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Sort Intro</title>
+    
+    <link rel="stylesheet" href="start.css">
+</head>
+
+<body id="body">
+    
+  <img src="previous.png" class="prev-btn" onclick="window.location.href='Screen2.html'">
+  
+  <h1 id="title"></h1>
+
+  <div id="images"></div>
+
+  <script>
+      //Extract "type" from the URL
+      const params = new URLSearchParams(window.location.search);
+      const type = params.get("type");
+
+      const body = document.getElementById("body");
+      const title = document.getElementById("title");
+      const imagesDiv = document.getElementById("images");
+
+       //Bubble sort introduction
+      if (type === "bubble") 
+      {
+          body.style.background = "linear-gradient(135deg, #a8d8ff, #e8f0ff)";
+          title.textContent = "BUBBLE SORT";
+          
+          imagesDiv.innerHTML = `
+            <img src="Bubble1.gif" style="position:absolute;left:21%; top:21%; height:25%; width:25%;">
+            <img src="Bubble2.png" style="position:absolute;right:0%; bottom:0%; height:40%; width:40%;">
+            <img src="Bubble3.png" style="position:absolute;right:-1%; top:8%; height:30%; width:30%;">
+            <img src="Bubble4.png" style="position:absolute;left:0%; bottom:-3%; height:45%; width:25%;">
+          `;
+
+          setTimeout(() => {
+            window.location.href = "sort-inf.html?type=bubble";
+          }, 1500);
+
+      }
+      
+      else if (type === "insertion") 
+      {
+          body.style.background = "linear-gradient(135deg, #fffca8, #fffde8)";
+          title.textContent = "INSERTION SORT";
+
+          imagesDiv.innerHTML = `
+            <img src="Insertion2.png" style="position:absolute;right:0%; bottom:0%; height:35%; width:20%;">
+            <img src="Insertion3.png" style="position:absolute;right:-1%; top:-5%; height:35%; width:35%;">
+            <img src="Insertion4.png" style="position:absolute;left:0%; bottom:-3%; height:45%; width:35%;">
+          `;
+
+          setTimeout(() => {
+              window.location.href = "sort-inf.html?type=insertion";
+            }, 1500);
+
+      } 
+      
+      //If user visits without query parameter
+      else 
+      {
+          title.textContent = "SORTING INTRO";
+          body.style.background = "linear-gradient(135deg, #ddd, #fff)";
+      }
+  </script>
+</body>
+</html>
+
