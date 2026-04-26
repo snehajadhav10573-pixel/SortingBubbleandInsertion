@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bubble Sort Visualization</title>
+  <link rel="stylesheet" href="bs.css">
+</head>
+<body>
+  <img src="previous.png" class="prev-btn" onclick="window.location.href='Screen2.html'">
+
+ <script>
+  var a = [];
+  var steps = [];
+  var currentStep = 0;
+  var sorting = false;
+  var startTime = 0;
+  var comparisons = 0;
+  var swaps = 0;
+
+  
+  function bubsort() {
+    document.getElementById("pre").style.display = "block";
+    document.getElementById("next").style.display = "block";
+    var casetype = document.getElementById("caseType").value;
+
+    if (casetype == "best") a = [1, 2, 3, 4, 5];
+    else if (casetype == "average") a = [3, 1, 4, 2, 5];
+    else if (casetype == "worst") a = [5, 4, 3, 2, 1];
+    else if (casetype == "user") {
+      var input = document.getElementById("t1").value.trim();
+      a = input.split(",").map(Number);
+    }
+
+    if (!a.length || a.some(isNaN)) {
+      alert("Please enter a valid array!");
+      return;
+    }
+
+    document.getElementById("res").innerHTML = `<b>Press → to move step by step</b>`;
+    document.getElementById("timeTaken").innerText = "Sorting Started...";
+    steps = [];
+    currentStep = 0;
+    comparisons = 0;
+    swaps = 0;
+    startTime = performance.now();
+    sorting = true;
+
+    generateSteps(); 
+  }
+
+  
+  function renderArray(arr, x = -1, y = -1, sortedLimit = -1) {
+    var html = "";
+    for (var k = 0; k < arr.length; k++) {
+      var cls = "num-bubble";
+      if (k === x || k === y) cls += " highlight";
+      if (sortedLimit !== -1 && k >= sortedLimit) cls += " final";
+      html += `<div class="${cls}">${arr[k]}</div>`;
+    }
+    return html;
+  }
+
+ 
+  function generateSteps() {
+    var arr = a.slice();
+    var n = arr.length;
+
+    for (var i = 0; i < n - 1; i++) {
+      var swapped = false; 
+
+      for (var j = 0; j < n - i - 1; j++) {
+        comparisons++;
+
+        steps.push({
+          arr: arr.slice(),
+          x: j,
+          y: j + 1,
+          pass: i + 1,
+          done: false
+        });
+
+        if (arr[j] > arr[j + 1]) {
+          swaps++;
+          var temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+          swapped = true;
+        }
+      }
+
+     
+      steps.push({
+        arr: arr.slice(),
+        x: -1,
+        y: -1,
+        pass: i + 1,
+        done: true
+      });
+
+     
+      if (!swapped) break;
+    }
+
+   
+    steps.push({
+      arr: arr.slice(),
+      x: -1,
+      y: -1,
+      pass: n - 1,
+      final: true
+    });
+  }
+
+ 
+  function nextStep() {
+    if (!sorting) return;
+    if (currentStep < steps.length - 1) currentStep++;
+    else return;
+
+    var s = steps[currentStep];
+    var html = "";
+    var prevHTML = "";
+
+    for (var k = 0; k < currentStep; k++) {
+      var ps = steps[k];
+      if (ps.done)
+        prevHTML += `<div class='step'><b>After Pass ${ps.pass}:</b><br>${renderArray(ps.arr, -1, -1, ps.arr.length - ps.pass)}</div>`;
+    }
+
+    if (s.final) {
+      html = `<b>Sorted Array:</b><br>${renderArray(s.arr, -1, -1, s.arr.length)}`;
+      sorting = false;
+      var endTime = performance.now();
+      var timeSeconds = ((endTime - startTime) / 1000).toFixed(3);
+      document.getElementById("timeTaken").innerText =
+        `Time Required: ${timeSeconds} seconds\nComparisons: ${comparisons}\nSwaps: ${swaps}`;
+    } else if (s.done) {
+      html = `<b>After Pass ${s.pass}:</b><br>${renderArray(s.arr, -1, -1, s.arr.length - s.pass)}`;
+    } else {
+      html = `<b>Pass ${s.pass} - Comparing ${s.arr[s.x]} & ${s.arr[s.y]}:</b><br>${renderArray(s.arr, s.x, s.y, s.arr.length - s.pass + 1)}`;
+    }
+
+    document.getElementById("res").innerHTML = prevHTML + html;
+  }
+
+ 
+  function prevStep() {
+    if (currentStep > 0) currentStep--;
+    else return;
+
+    var s = steps[currentStep];
+    var html = "";
+    var prevHTML = "";
+
+    for (var k = 0; k < currentStep; k++) {
+      var ps = steps[k];
+      if (ps.done)
+        prevHTML += `<div class='step'><b>After Pass ${ps.pass}:</b><br>${renderArray(ps.arr, -1, -1, ps.arr.length - ps.pass)}</div>`;
+    }
+
+    if (s.final) {
+      html = `<b>Sorted Array:</b><br>${renderArray(s.arr, -1, -1, s.arr.length)}`;
+      sorting = false;
+    } else if (s.done) {
+      html = `<b>After Pass ${s.pass}:</b><br>${renderArray(s.arr, -1, -1, s.arr.length - s.pass)}`;
+    } else {
+      html = `<b>Pass ${s.pass} - Comparing ${s.arr[s.x]} & ${s.arr[s.y]}:</b><br>${renderArray(s.arr, s.x, s.y, s.arr.length - s.pass + 1)}`;
+    }
+
+    document.getElementById("res").innerHTML = prevHTML + html;
+  }
+
+  
+  function abc() {
+    document.getElementById("pre").style.display = "none";
+    document.getElementById("next").style.display = "none";
+    document.getElementById("ws").innerHTML = "Comparison";
+    document.getElementById("res").innerHTML = `
+      <div style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(14px);
+      border-radius: 20px; box-shadow: 0 4px 25px rgba(0,0,0,0.2); padding: 25px;
+      color: #1c1c1c; font-family: 'Poppins', sans-serif; text-align: center;">
+      
+        <h2 style="margin-bottom: 20px; font-weight: 600; color:#222;">Bubble Sort Case Comparison</h2>
+
+        <table style="width:100%; border-collapse: collapse; border-radius: 15px; overflow: hidden;">
+          <thead style="background: linear-gradient(90deg, #ff7eb3, #ff758c); color:white;">
+            <tr style="height: 50px; font-size: 16px;">
+              <th style="width:20%; text-align:left; padding-left:15px;">Property</th>
+              <th style="width:26%;">Best Case</th>
+              <th style="width:26%;">Average Case</th>
+              <th style="width:26%;">Worst Case</th>
+            </tr>
+          </thead>
+
+          <tbody style="background-color: rgba(255,255,255,0.8); color:#222; font-size:15px; font-weight:500;">
+            <tr><td style="padding:10px 15px; text-align:left;"><b>Time Complexity</b></td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td></tr>
+             <tr><td style="padding:10px 15px; text-align:left;"><b>Time in Sec</b></td><td>4.851 s</td><td>6.450 s</td><td>9.821 s</td></tr>
+            <tr><td style="padding:10px 15px; text-align:left;"><b>Space Complexity</b></td><td>O(1)</td><td>O(1)</td><td>O(1)</td></tr>
+            <tr><td style="padding:10px 15px; text-align:left;"><b>Comparisons</b></td><td>4</td><td>9</td><td>10</td></tr>
+            <tr><td style="padding:10px 15px; text-align:left;"><b>Swaps</b></td><td>0</td><td>3</td><td>10</td></tr>
+            <tr style="vertical-align:top;">
+              <td style="padding:12px 15px; text-align:left;"><b>Explanation</b></td>
+              <td style="padding:12px 20px; text-align:left;">• Array already sorted.<br>• Only one pass required.<br>• Comparisons = n − 1.<br>• Early termination stops further passes.</td>
+              <td style="padding:12px 20px; text-align:left;">• Elements in random order.<br>• Each pass moves largest element to end.<br>• Comparisons = n(n − 1)/2.<br>• Moderate swaps occur.</td>
+              <td style="padding:12px 20px; text-align:left;">• Array in reverse order.<br>• Every pair compared and swapped.<br>• Comparisons = n(n − 1)/2.<br>• Maximum swaps happen.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>`;
+    document.getElementById("timeTaken").innerText = "Comparison done";
+  }
+</script>
+
+
+  <div class="split-container">
+    <div class="split left">
+      <div class="choice-box">
+        <h2>Select Case Type</h2>
+        <select id="caseType">
+          <option value="" disabled selected>-- Select Case --</option>
+          <option value="best">Best Case</option>
+          <option value="average">Average Case</option>
+          <option value="worst">Worst Case</option>
+          <option value="user">User input</option>
+        </select>
+      </div>
+
+      <div class="input-box">
+        <div class="input-container">
+          Enter array: <input type="text" id="t1" placeholder="Eg 4,1,8,9,3">
+        </div>
+      </div>
+
+      <button onclick="bubsort()">Calculate</button>
+      <button onclick="abc()">Compare</button>
+    </div>
+
+    <div class="split right">
+      <h2 id="ws">Working Steps</h2>
+      <div id="res">
+        <p>Bubble Sort steps will be displayed here...</p>
+      </div>
+      <div class="step-buttons">
+        <button onclick="prevStep()" id="pre">← Previous</button>
+        <button onclick="nextStep()" id="next">Next →</button>
+      </div>
+      <div class="time-panel">
+        <p id="timeTaken">Time Required: –</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: linear-gradient(135deg, #e8d8ff, #d6b8ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Main glass container */
+.result-container {
+    background: rgb(255, 254, 254);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 50px 70px;
+    text-align: center;
+    color: #3d2a5f;
+    width: 100%;
+    max-width: 800px;
+    font-family: 'Bradley Hand ITC';
+    font-weight: bolder;
+}
+
+/* Title */
+.result-container h1 {
+    font-family: 'Lucida Calligraphy';
+    font-size: 50px;
+    margin-bottom: 30px;
+    color: #2d174f;
+}
+
+/* Summary points */
+.summary {
+    text-align: left;
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+.summary ul {
+    margin-top: 10px;
+    padding-left: 30px;
+    list-style-type: disc;
+}
+
+.summary li {
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+/* Insight text */
+.insight {
+    font-size: 25px;
+    margin-bottom: 50px;
+    color: #321f56;
+}
+
+/* Button */
+button {
+    padding: 14px 40px;
+    font-size: 22px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Lucida Calligraphy';
+    background: linear-gradient(135deg, #d19fff, #a569ff);
+    color: white;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+button:hover {
+    transform: scale(1.08);
+    background: linear-gradient(135deg, #b984ff, #8b5fff);
+}

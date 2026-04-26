@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Sorting Algorithms</title>
+    
+    <link rel="stylesheet" href="Screen2.css">    
+</head>
+
+<body>
+    
+    <h1>Sorting Algorithms</h1>
+    
+    <div class="container">
+        <div class="note" style="animation-name: slideInLeft;" onclick="Bubble()">
+            <h2>Bubble Sort</h2>
+            <button>Start</button>
+        </div>
+        
+        <div class="note" style="animation-name: slideInRight;" onclick="Insertion()">
+            <h2>Insertion Sort</h2>
+            <button>Start</button>
+        </div>
+    </div>
+    
+
+
+    <!--for the numbers to float on screen-->
+    <script>
+        const numbers = '0123456789';
+        const total = 30;
+
+        for (var i=0; i<total; i++) 
+        {
+            var n = document.createElement('div');
+            n.classList.add('number');
+            n.innerText = numbers[Math.floor(Math.random() * numbers.length)];
+            n.style.left = Math.random() * 100 + 'vw';
+            n.style.top = Math.random() * 100 + 'vh';
+            n.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            n.style.animationDuration = (Math.random() * 20 + 10) + 's';
+            n.style.opacity = Math.random() * 0.4 + 0.3;
+            document.body.appendChild(n);
+        }
+        
+        function Bubble()
+        {
+            window.location.href = "sort-start.html?type=bubble";
+        }
+        
+        function Insertion() 
+        {
+            window.location.href = "sort-start.html?type=insertion";
+        }
+
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Sorting Algorithm Visualization</title>
+    
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <h1>Sorting Algorithm Visualization</h1>
+    
+    <!--start button-->
+    <img src="start.png" id="start-image" onclick="NextPage()">
+    
+    <!--other images-->
+    <img src="Sort1.png" style="position:absolute ; left: -2%; bottom: 25%; height: 47%; width: 26%;">
+    <img src="Sort2.png" style="position:absolute ; left: 23%; top: 2%; height: 25%; width: 25%;">
+    <img src="Sort3.png" style="position:absolute ; right: -1%; top: 0%; height: 35%; width: 35%;">
+    
+    
+    <!--moving bars-->
+    <div class="bars">
+        <script>
+            for (let i = 0; i < 25; i++) 
+            {
+                document.write(`<div class='bar' style='--i:${i}'></div>`);
+            }
+        </script>
+    </div>
+
+    <script>
+        function NextPage() 
+        {
+            window.location.href = "Screen2.html";
+        }
+    </script>
+</body>
+</html>
+

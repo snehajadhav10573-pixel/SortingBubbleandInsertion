@@ -1,0 +1,60 @@
+body{
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Bradley Hand ITC', bold;
+  position: relative;
+}
+
+.prev-btn{
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 80px;
+  width: 80px;
+  cursor: pointer;
+}
+
+.notebook{
+  position: relative;
+  background: url('note.png') no-repeat center center/contain;
+  background-size: 100% 100%;
+  width: 700px;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  padding: 50px 70px;
+  box-sizing: border-box;
+}
+
+.info{
+  font-size: 25px;
+  font-weight: bolder;
+  color: #000;
+  line-height: 2;
+}
+
+button{
+  margin-top: 40px;
+  padding: 10px 35px;
+  font-size: 24px;
+  font-family: 'Bradley Hand ITC';
+  font-weight: bolder;
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover{
+  background-color: #000;
+  color: #fff;
+}
+  
